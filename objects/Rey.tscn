@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://objects/Piece.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/Rey.png" type="Texture" id=2]
+[ext_resource path="res://scripts/rey.gd" type="Script" id=3]
+
+[node name="Rey" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( 1.3077, 1.3077 )
+scale = Vector2( 0.973842, 0.973842 )
+texture = ExtResource( 2 )

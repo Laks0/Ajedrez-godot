@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://objects/Piece.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/Peon.png" type="Texture" id=2]
+[ext_resource path="res://scripts/peon.gd" type="Script" id=3]
+
+[node name="Peon" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( 0.708984, 0.708984 )
+scale = Vector2( 0.985816, 0.985816 )
+texture = ExtResource( 2 )

@@ -51,6 +51,7 @@ func unsel():
 	remove_temp()
 
 func new_sel(): # Se llama cada vez que la pieza es seleccionada
+	movable = []
 	sel = true
 	set_movable()
 

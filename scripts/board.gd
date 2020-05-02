@@ -14,14 +14,14 @@ func _ready():
 		grid.append(t)
 	
 	var p = Piece.instance()
-	p.set_up(-1, Vector2(2,2))
+	p.set_up(-1, Vector2(2,7))
 	add_child(p)
-	grid[2][2] = p
+	grid[2][7] = p
 	
 	var p2 = Piece.instance()
-	p2.set_up(1, Vector2(5,2))
+	p2.set_up(1, Vector2(3,1))
 	add_child(p2)
-	grid[5][2] = p2
+	grid[3][1] = p2
 
 func _process(delta):
 	var click = Input.is_action_just_released("Click")

@@ -6,18 +6,20 @@ var grid_pos = Vector2()
 
 var sel = false # Está seleccionado
 
-var movable = [Vector2(0,0),Vector2(1,0)] # Todas las casillas a las que se puede mover la pieza
+var movable = [] # Todas las casillas a las que se puede mover la pieza
+
+var team
 
 onready var Board = get_parent()
 
 func set_up(_team, _g_pos):
-	add_to_group(str(_team))
+	team = _team
 	grid_pos = _g_pos
 
 func _ready():
 	update_position(grid_pos)
 	
-	if is_in_group("1"):
+	if team == 1:
 		$Sprite.modulate = Color(.2,.2,.2)
 
 func _process(delta):
@@ -55,6 +57,26 @@ func new_sel(): # Se llama cada vez que la pieza es seleccionada
 	for pos in movable: # Crea un Sprite en Temp por cada posición a la que se puede mover la pieza
 		var s = Sprite.new()
 		s.texture = move_texture
+		s.z_index = 1
+		s.modulate = Color(1,1,1,.6)
 		s.position = Board.map_to_world(pos) + Vector2(50, 50) - position
 		# La posición tiene que compensar el offset y la posición de la pieza
 		$Temp.add_child(s)
+
+# Herramientas para definir movimientos
+func check_in_direction(x,y): # Para seguir en una linea recta
+	var moves = []
+	var currentPos = grid_pos + Vector2(x,y) # La posicion a chequear
+	
+	while Board.inside_grid(currentPos): # Mientras esté dentro del tablero
+		var cell = Board.at_grid(currentPos)
+		if cell == null: # Si no está vacío
+			moves.append(currentPos)
+			currentPos += Vector2(x,y)
+		else:
+			if cell.team != team: # Si es del otro equipo
+				moves.append(currentPos)
+				currentPos += Vector2(x,y)
+			break
+	
+	return moves

@@ -13,11 +13,15 @@ func _ready():
 			t.append(null)
 		grid.append(t)
 	
-	# DEBUG
 	var p = Piece.instance()
 	p.set_up(-1, Vector2(2,2))
 	add_child(p)
 	grid[2][2] = p
+	
+	var p2 = Piece.instance()
+	p2.set_up(-1, Vector2(5,2))
+	add_child(p2)
+	grid[5][2] = p2
 
 func _process(delta):
 	var click = Input.is_action_just_released("Click")
@@ -26,7 +30,7 @@ func _process(delta):
 		var mouse_pos = get_mouse_on_grid()
 		var p = grid[mouse_pos.x][mouse_pos.y]
 		if p != null: # Si se clickeó una casilla con una pieza
-			if p.is_in_group(str(turn)): # Si es su turno
+			if p.team == turn: # Si es su turno
 				p.new_sel() # Seleccionarla
 
 func move_piece(from, to):
@@ -44,3 +48,9 @@ func end_turn():
 
 func get_mouse_on_grid():
 	return world_to_map(get_global_mouse_position())
+
+func at_grid(pos):
+	return grid[pos.x][pos.y]
+
+func inside_grid(vector):
+	return vector.x >= 0 and vector.x < 8 and vector.y >= 0 and vector.y < 8 

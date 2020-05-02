@@ -19,7 +19,7 @@ func _ready():
 	grid[2][2] = p
 	
 	var p2 = Piece.instance()
-	p2.set_up(-1, Vector2(5,2))
+	p2.set_up(1, Vector2(5,2))
 	add_child(p2)
 	grid[5][2] = p2
 

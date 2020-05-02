@@ -1,5 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://objects/Piece.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/torre.gd" type="Script" id=2]
+[ext_resource path="res://assets/Torre.png" type="Texture" id=3]
 
 [node name="Torre" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( -2.28473, -2.28471 )
+scale = Vector2( 1.04569, 1.04569 )
+texture = ExtResource( 3 )

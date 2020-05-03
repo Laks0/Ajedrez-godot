@@ -74,18 +74,19 @@ func check():
 		Board.to_grid(pos, self)
 		Board.clear_grid(grid_pos)
 		
-		var kingPos # La posición del rey en el tablero hipotético
+		var king_pos # La posición del rey en el tablero hipotético
 		var enemies = []
 		for x in Board.grid:
 			for p in x:
 				if p != null:
-					if p.is_in_team(team) and p.is_in_group("Rey"): kingPos = p.grid_pos
+					if p.is_in_team(team) and p.is_in_group("Rey"): king_pos = p.grid_pos
 					if p.is_in_team(-team): enemies.append(p)
+		if is_in_group("Rey"): king_pos = pos
 		
 		for e in enemies: # Por cada enemigo
 			e.set_movable()
 			for threat in e.movable: # Por cada posibilidad de movimiento enemigo
-				if threat == kingPos: # Si se amenaza al rey
+				if threat == king_pos: # Si se amenaza al rey
 					to_remove.append(pos)
 					break
 		

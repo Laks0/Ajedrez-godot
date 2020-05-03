@@ -48,6 +48,21 @@ func move_piece(from, to):
 
 func end_turn():
 	turn = -turn
+	
+	# Fijarse si hay un jaque mate
+	var mate
+	for p in get_tree().get_nodes_in_group(str(turn)):
+		p.new_sel()
+		var movs = p.movable.size()
+		p.unsel()
+		if movs > 0:
+			mate = false
+			break
+		mate = true
+	if mate: mate()
+
+func mate():
+	print("mate")
 
 func get_mouse_on_grid():
 	return world_to_map(get_global_mouse_position())
@@ -86,7 +101,7 @@ func inicial(): # Posicion inicial
 		spawn_piece(Alfil, Vector2(2 + x * 3, 0), 1)
 	# Damas
 	spawn_piece(Dama, Vector2(3, 7), -1)
-	spawn_piece(Dama, Vector2(4, 0), 1)
+	spawn_piece(Dama, Vector2(3, 0), 1)
 	# Reyes
 	spawn_piece(Rey, Vector2(4, 7), -1)
-	spawn_piece(Rey, Vector2(3, 0), 1)
+	spawn_piece(Rey, Vector2(4, 0), 1)

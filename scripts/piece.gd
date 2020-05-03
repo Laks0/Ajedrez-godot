@@ -3,18 +3,17 @@ extends KinematicBody2D
 const move_texture = preload("res://assets/Move.png")
 
 var grid_pos = Vector2()
-
+var team
 var sel = false # Está seleccionado
 
 var movable = [] # Todas las casillas a las que se puede mover la pieza
-
-var team
 
 onready var Board = get_parent()
 
 func set_up(_team, _g_pos):
 	team = _team
 	grid_pos = _g_pos
+	add_to_group(str(_team))
 
 func _ready():
 	update_position(grid_pos)
@@ -54,7 +53,9 @@ func new_sel(): # Se llama cada vez que la pieza es seleccionada
 	movable = []
 	sel = true
 	set_movable()
-
+	
+	check()
+	
 	for pos in movable: # Crea un Sprite en Temp por cada posición a la que se puede mover la pieza
 		var s = Sprite.new()
 		s.texture = move_texture
@@ -63,6 +64,35 @@ func new_sel(): # Se llama cada vez que la pieza es seleccionada
 		s.position = Board.map_to_world(pos) + Vector2(50, 50) - position
 		# La posición tiene que compensar el offset y la posición de la pieza
 		$Temp.add_child(s)
+
+func check():
+	var to_remove = [] # Movimientos a eliminar
+	
+	var oldBoard = Board.get_grid() # Guardar una copia del tablero
+	for pos in movable: # Por cada posibilidad
+		# Crear un tablero hipotético del movimiento
+		Board.to_grid(pos, self)
+		Board.clear_grid(grid_pos)
+		
+		var kingPos # La posición del rey en el tablero hipotético
+		var enemies = []
+		for x in Board.grid:
+			for p in x:
+				if p != null:
+					if p.is_in_team(team) and p.is_in_group("Rey"): kingPos = p.grid_pos
+					if p.is_in_team(-team): enemies.append(p)
+		
+		for e in enemies: # Por cada enemigo
+			e.set_movable()
+			for threat in e.movable: # Por cada posibilidad de movimiento enemigo
+				if threat == kingPos: # Si se amenaza al rey
+					to_remove.append(pos)
+					break
+		
+		Board.grid = oldBoard.duplicate(true) # Volver al tablero real
+	
+	for i in to_remove:
+		movable.erase(i)
 
 # Herramientas para definir movimientos
 func check_in_direction(x,y): # Para seguir en una linea recta
@@ -81,3 +111,6 @@ func check_in_direction(x,y): # Para seguir en una linea recta
 			break
 	
 	return moves
+
+func is_in_team(t):
+	return is_in_group(str(t))

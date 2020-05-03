@@ -55,8 +55,17 @@ func get_mouse_on_grid():
 func at_grid(pos):
 	return grid[pos.x][pos.y]
 
+func to_grid(pos, x):
+	grid[pos.x][pos.y] = x
+
+func clear_grid(pos):
+	grid[pos.x][pos.y] = null
+
 func inside_grid(vector):
-	return vector.x >= 0 and vector.x < 8 and vector.y >= 0 and vector.y < 8 
+	return vector.x >= 0 and vector.x < 8 and vector.y >= 0 and vector.y < 8
+
+func get_grid():
+	return grid.duplicate(true)
 
 func inicial(): # Posicion inicial
 	# Peones

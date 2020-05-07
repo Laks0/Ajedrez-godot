@@ -32,3 +32,18 @@ z_index = -1
 texture = ExtResource( 3 )
 centered = false
 flip_h = true
+
+[node name="Undo" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -68.0
+margin_top = -10.0
+margin_right = -22.0
+margin_bottom = 10.0
+text = "Undo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_up" from="Undo" to="Board" method="_on_Undo_button_up"]

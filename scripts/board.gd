@@ -9,6 +9,9 @@ export (PackedScene) var Torre
 
 var grid = []
 
+var prev_grid
+var eaten
+
 var turn = -1 # Turno, -1 = blancas, 1 = negras
 
 func _ready():
@@ -38,7 +41,11 @@ func spawn_piece(piece, pos, team):
 	add_child(p)
 
 func move_piece(from, to):
+	prev_grid = get_grid()
+	eaten = null
+	
 	if grid[to.x][to.y] != null: # Verificar si la casilla está ocupada
+		eaten = grid[to.x][to.y]
 		grid[to.x][to.y].kill() # Comer la pieza que la ocupa
 	
 	move_grid(from, to)
@@ -114,3 +121,16 @@ func inicial(): # Posicion inicial
 	# Reyes
 	spawn_piece(Rey, Vector2(4, 7), -1)
 	spawn_piece(Rey, Vector2(4, 0), 1)
+
+
+func _on_Undo_button_up():
+	grid = prev_grid.duplicate(true)
+	for x in grid.size():
+		for y in grid[0].size():
+			var p = grid[x][y]
+			if p != null:
+				p.update_position(Vector2(x, y))
+	if eaten != null:
+		add_child(eaten)
+		eaten.update_position(eaten.grid_pos)
+	turn *= -1

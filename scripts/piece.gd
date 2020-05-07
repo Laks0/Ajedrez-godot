@@ -5,6 +5,7 @@ const move_texture = preload("res://assets/Move.png")
 var grid_pos = Vector2()
 var team
 var sel = false # Está seleccionado
+var team_normal
 
 var movable = [] # Todas las casillas a las que se puede mover la pieza
 
@@ -12,6 +13,7 @@ onready var Board = get_parent()
 
 func set_up(_team, _g_pos):
 	team = _team
+	team_normal = sign(team - 1)
 	grid_pos = _g_pos
 	add_to_group(str(_team))
 

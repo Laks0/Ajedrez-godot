@@ -25,10 +25,11 @@ func _process(delta):
 	
 	if click:
 		var mouse_pos = get_mouse_on_grid()
-		var p = grid[mouse_pos.x][mouse_pos.y]
-		if p != null: # Si se clickeó una casilla con una pieza
-			if p.team == turn: # Si es su turno
-				p.new_sel() # Seleccionarla
+		if inside_grid(mouse_pos):
+			var p = grid[mouse_pos.x][mouse_pos.y]
+			if p != null: # Si se clickeó una casilla con una pieza
+				if p.team == turn: # Si es su turno
+					p.new_sel() # Seleccionarla
 
 func spawn_piece(piece, pos, team):
 	var p = piece.instance()
@@ -37,14 +38,22 @@ func spawn_piece(piece, pos, team):
 	add_child(p)
 
 func move_piece(from, to):
-	var pfrom = grid[from.x][from.y]
 	if grid[to.x][to.y] != null: # Verificar si la casilla está ocupada
 		grid[to.x][to.y].kill() # Comer la pieza que la ocupa
 	
+	move_grid(from, to)
+	
+	end_turn()
+
+func move_grid(from, to):
+	var pfrom = grid[from.x][from.y]
 	grid[to.x][to.y] = pfrom
+	
 	grid[from.x][from.y] = null
 	pfrom.update_position(to)
-	end_turn()
+	
+	if pfrom.has_method("move"):
+		pfrom.move()
 
 func end_turn():
 	turn = -turn

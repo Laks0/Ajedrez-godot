@@ -133,7 +133,7 @@ func _on_Undo_button_up():
 			if p != null:
 				p.update_position(Vector2(x, y))
 	if eaten != null:
-		comidas[sign(turn + 1)].remove_child(eaten)
+		eaten.clear_parent()
 		add_child(eaten)
-		eaten.update_position(Vector2(1,1))
+		eaten.update_position(eaten.grid_pos)
 	turn *= -1

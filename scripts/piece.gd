@@ -118,3 +118,6 @@ func check_in_direction(x,y): # Para seguir en una linea recta
 
 func is_in_team(t):
 	return is_in_group(str(t))
+
+func clear_parent():
+	get_parent().remove_child(self)

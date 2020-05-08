@@ -38,6 +38,7 @@ func set_movable():
 
 func kill():
 	Board.remove_child(self)
+	Board.comidas[-team_normal].add(self)
 
 func remove_temp():
 	for t in $Temp.get_children():

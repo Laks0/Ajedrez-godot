@@ -9,6 +9,9 @@ export (PackedScene) var Torre
 
 var grid = []
 
+onready var comidas = [get_parent().get_node("Eaten_white"), 
+get_parent().get_node("Eaten_black")]
+
 var prev_grid
 var eaten
 
@@ -121,7 +124,6 @@ func inicial(): # Posicion inicial
 	# Reyes
 	spawn_piece(Rey, Vector2(4, 7), -1)
 	spawn_piece(Rey, Vector2(4, 0), 1)
-
 
 func _on_Undo_button_up():
 	grid = prev_grid.duplicate(true)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/board.gd" type="Script" id=1]
 [ext_resource path="res://objects/Caballo.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://objects/Rey.tscn" type="PackedScene" id=6]
 [ext_resource path="res://objects/Alfil.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/Torre.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scripts/Comidas.gd" type="Script" id=9]
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
@@ -46,4 +47,12 @@ text = "Undo"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Eaten_white" type="Node2D" parent="."]
+position = Vector2( 800, 500 )
+script = ExtResource( 9 )
+
+[node name="Eaten_black" type="Node2D" parent="."]
+position = Vector2( 800, 0 )
+script = ExtResource( 9 )
 [connection signal="button_up" from="Undo" to="Board" method="_on_Undo_button_up"]
